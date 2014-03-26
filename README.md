@@ -103,6 +103,61 @@ The primary file (app.js):
   In client to server connection I recomend use this kind of structure
         ![diagram](diagram.png "diagram")
   
-  
-  
+  The login.js file(client):
+      
+      function Login(username){
+        $("#lbutton").on('click',function(){
+          LoginIO.authenticate({username:$("#username").val(),password:$("#password").val()});
+        });
 
+  The login.io.js file(client):
+      
+      LoginIO = function(){ };
+      LoginIO.authenticate = function(data){
+          $.post('/login',data,function(data){
+             alert(data);
+          });
+      };
+      
+  The login.io.js file(server):
+    
+      module.exports = function LoginIoController(modules,_this){
+        _this.app.get('/login',function(req,res){
+            req.session.lang = 'en';
+            modules.login.controller.loadPage(req.session,res);
+        });
+    
+            _this.app.post('/login',function(req,res){
+                modules.login.controller.checkUserLogin(req.session,res,req.body.username,req.body.password);
+            });
+      };
+      
+  The login.js file(server):
+      
+      module.exports = function LoginController(modules,_this) {
+          this.loadPage = function(session,res){
+              res.render('login',{session:session,lang:modules.login.view.getLang()});
+          };
+      
+          this.checkUserLogin = function(session,res,username,password){
+              modules.users.controller.getUser(checkUserLoginCallback,username,password,{session:session,res:res});
+          };
+      
+          function checkUserLoginCallback(data,err,result){
+              if (err)
+                  _this.logger(err);
+              if (!result[0]){
+                  data.res.writeHead(200, {'Content-Type': 'text/plain'});
+                  data.res.write("nu ai fost logat");
+                  data.res.end();
+              }else{
+                  data.session.user = result[0];
+                  data.session.save();
+      
+                  data.res.writeHead(200, {'Content-Type': 'text/plain'});
+                  data.res.write("ai fost logat");
+                  data.res.end();
+              }
+          }
+      };
+      
