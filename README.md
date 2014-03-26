@@ -192,16 +192,16 @@ The primary file (app.js):
   Login module depends on users module( just to show how a repository pattern and module connection works ).Diagram looks like this:
         ![diagram 2](diagram2.png "diagram 2")
   
-  users
-  |
-  --mvc
+    users
     |
-    --controllers
+    --mvc
       |
-      -- users.js
-    --repository
-      |
-      -- usersRepository.js
+      --controllers
+        |
+        -- users.js
+      --repository
+        |
+        -- usersRepository.js
   
   The users.js file:
   
