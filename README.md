@@ -2,6 +2,7 @@ hmvc
 ====
 
 A hierarchical mvc framework for node.js.
+I created this framework in order to create my bachelor degree project.
 
 license
 ====
