@@ -105,7 +105,7 @@ The primary file (app.js):
   
   The login.js file(client):
       
-      function Login(username){
+      function Login(){
         $("#lbutton").on('click',function(){
           LoginIO.authenticate({username:$("#username").val(),password:$("#password").val()});
         });
@@ -172,7 +172,7 @@ The primary file (app.js):
           <script language="javascript" src="jquery/jquery.js"></script>
           <script language="javascript">
               $(document).ready(function(){
-                  Login('<%= session.username %>');
+                  Login();
               });
           </script>
       </head>
@@ -185,7 +185,10 @@ The primary file (app.js):
                 <div width="140"><input type="password" id="password"></div>
                 <div align="center" colspan="2"><%= lang.login_remember[session.lang] %><input type="checkbox" id="setcookie"></div>
                 <input type="button" id="lbutton" class="submit" value="Login">
-                <input type="button" id="recoverButton" class="button" value="Recover">
           </div>
       </body>
       </html>
+      
+  Login module depends on users module( just to show how a repository pattern and module connection works ).
+  
+  
