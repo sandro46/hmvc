@@ -89,16 +89,26 @@ The primary file (app.js):
         login
         |
         --css
+          |
+          -- login.css
         |
         --javascript
+          |
+          -- login.js
+          -- login.io.js
         |
         --mvc
            |
            --controllers
+              |
+              -- login.js
+              -- login.io.js
            |
            --models
            |
            --views
+              |
+              -- login.html
        
   In client to server connection I recomend use this kind of structure
         ![diagram](diagram.png "diagram")
