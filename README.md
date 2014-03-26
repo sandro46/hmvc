@@ -204,6 +204,7 @@ The primary file (app.js):
       -- usersRepository.js
   
   The users.js file:
+  
       module.exports = function UsersController(modules) {
         this.getUser = function(callback,username,password,data){
             modules.users.repository.getUser(callback,username,password,data);
@@ -211,6 +212,7 @@ The primary file (app.js):
       }
       
   The userRepository.js file:
+  
       module.exports = function UsersRepository(db) {
         this.getUser = function(callback,username,password,data){
             db.query(this.sqls["get"],[username,password],callback.bind(null, data));
