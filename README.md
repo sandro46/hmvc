@@ -23,41 +23,41 @@ In order to run the example you need to create a database in mysql with a table 
         
 The primary file (app.js):
 ```js
-        Hmvc = require('hmvc');
-        express = require('express');
-        ejs = require('ejs');
-        var app = express();
-        
-        app.configure(function () {
-            app.engine('.html', require('ejs').__express);
-            app.set('view engine', 'html');
-        
-            app.use(express.static(__dirname + '/plugins/'));
-        
-            app.use(express.cookieParser('bleah'));
-            app.use(express.bodyParser());
-            app.use(express.session());
-        });
-        
-        hmvc = new Hmvc({app:app,renderer:ejs.render,sqlfile:"sqlStatements",langfile:'lang'});
-        
-        hmvc.setMysqlHost({
-            host : 'localhost',
-            user: 'root',
-            password: 'amber',
-            database: 'baza'
-        });
-        hmvc.loadModules(__dirname+"/modules");
-        var modules = hmvc.modules;
-        
-        app.get('/', function(req, res){
-            res.render('index', {
-                stylesheets: modules.stylesheets,
-                javascripts: modules.javascripts
-            });
-        });
-        
-        app.listen(7076);
+  Hmvc = require('hmvc');
+  express = require('express');
+  ejs = require('ejs');
+  var app = express();
+  
+  app.configure(function () {
+      app.engine('.html', require('ejs').__express);
+      app.set('view engine', 'html');
+  
+      app.use(express.static(__dirname + '/plugins/'));
+  
+      app.use(express.cookieParser('bleah'));
+      app.use(express.bodyParser());
+      app.use(express.session());
+  });
+  
+  hmvc = new Hmvc({app:app,renderer:ejs.render,sqlfile:"sqlStatements",langfile:'lang'});
+  
+  hmvc.setMysqlHost({
+      host : 'localhost',
+      user: 'root',
+      password: 'amber',
+      database: 'baza'
+  });
+  hmvc.loadModules(__dirname+"/modules");
+  var modules = hmvc.modules;
+  
+  app.get('/', function(req, res){
+      res.render('index', {
+          stylesheets: modules.stylesheets,
+          javascripts: modules.javascripts
+      });
+  });
+  
+  app.listen(7076);
 ```  
 In order to function properly hmvc require this structure in every module:
        
