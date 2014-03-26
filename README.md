@@ -109,7 +109,8 @@ The primary file (app.js):
         $("#lbutton").on('click',function(){
           LoginIO.authenticate({username:$("#username").val(),password:$("#password").val()});
         });
-
+      }
+      
   The login.io.js file(client):
       
       LoginIO = function(){ };
@@ -127,9 +128,9 @@ The primary file (app.js):
             modules.login.controller.loadPage(req.session,res);
         });
     
-            _this.app.post('/login',function(req,res){
-                modules.login.controller.checkUserLogin(req.session,res,req.body.username,req.body.password);
-            });
+        _this.app.post('/login',function(req,res){
+            modules.login.controller.checkUserLogin(req.session,res,req.body.username,req.body.password);
+        });
       };
       
   The login.js file(server):
@@ -161,3 +162,30 @@ The primary file (app.js):
           }
       };
       
+  And the view:
+      
+      <html>
+      <head>
+          <link rel="stylesheet" href="login.css"/>
+          <script language="javascript" src="login.js"></script>
+          <script language="javascript" src="login.io.js"></script>
+          <script language="javascript" src="jquery/jquery.js"></script>
+          <script language="javascript">
+              $(document).ready(function(){
+                  Login('<%= session.username %>');
+              });
+          </script>
+      </head>
+      <body>
+          <div id="login" style="height: 160px">
+                <div id='login_error' style="display: none"></div>
+                <div align="center">Username</div>
+                <div width="140"><input type="text" id="username"></div>
+                <div align="center">Password</div>
+                <div width="140"><input type="password" id="password"></div>
+                <div align="center" colspan="2"><%= lang.login_remember[session.lang] %><input type="checkbox" id="setcookie"></div>
+                <input type="button" id="lbutton" class="submit" value="Login">
+                <input type="button" id="recoverButton" class="button" value="Recover">
+          </div>
+      </body>
+      </html>
