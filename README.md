@@ -108,6 +108,9 @@ In order to function properly hmvc require this structure in every module:
   ```js    
   function Login(){
     LoginIO(); // we call the constructor because we will add things later maybe.
+  }
+  
+  Login().load = function(){
     $("#lbutton").on('click',function(){
       LoginIO.authenticate({username:$("#username").val(),password:$("#password").val()});
     });
@@ -293,6 +296,7 @@ Example(Websockets)
   
   socket.on('login:created',function(data){
      $("#login_container").html(data); // div in home page
+     Login.load();
   }
   
   socket.on('login:authenticated',function(data){
