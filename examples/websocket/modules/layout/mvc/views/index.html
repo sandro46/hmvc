@@ -1,0 +1,22 @@
+<html>
+<head>
+    <script language="javascript" src="jquery/jquery.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script language="javascript">
+        var socket = io.connect();
+        $(document).ready(function(){
+            Login();
+        });
+    </script>
+    <% stylesheets.forEach(function(stylesheet){ %>
+    <link rel="stylesheet" href="<%= stylesheet %>">
+    <% }) %>
+
+    <% javascripts.forEach(function(javascript){ %>
+    <script type="text/javascript" src="<%= javascript %>"></script>
+    <% }) %>
+</head>
+<body>
+    <div id='login_container'></div>
+</body>
+</html>
