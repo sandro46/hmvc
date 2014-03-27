@@ -263,7 +263,7 @@ Example(Websockets)
   };
   
   socket.on('login:created',function(data){
-     $("#login").html(data); // div in home page
+     $("#login_container").html(data); // div in home page
   }
   
   socket.on('login:authenticated',function(data){
@@ -310,6 +310,36 @@ Example(Websockets)
       }
   };
   ```
+  
+  And the view:
+  ```html    
+      <div id="login" style="height: 160px">
+            <div id='login_error' style="display: none"></div>
+            <div align="center">Username</div>
+            <div width="140"><input type="text" id="username"></div>
+            <div align="center">Password</div>
+            <div width="140"><input type="password" id="password"></div>
+            <div align="center" colspan="2"><%= lang.login_remember[session.lang] %><input type="checkbox" id="setcookie"></div>
+            <input type="button" id="lbutton" class="submit" value="Login">
+      </div>
+  ```      
+  
+  And the main page:
+  ```html    
+  <html>
+  <head>
+      <script language="javascript" src="jquery/jquery.js"></script>
+      <script language="javascript">
+          $(document).ready(function(){
+              Login();
+          });
+      </script>
+  </head>
+  <body>
+      <div id='login_container'></div>
+  </body>
+  </html>
+  ```      
 license
 ====
 
