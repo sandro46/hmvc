@@ -110,6 +110,18 @@ In order to function properly hmvc require this structure in every module:
   In client to server connection I recomend use this kind of structure
         ![diagram](diagram.png "diagram")
   
+  The login.js file(client):
+```js
+function Login(){
+    LoginIO();
+}
+
+Login.load = function(){
+    $("#lbutton").on('click',function(){
+        LoginIO.authenticate({username:$("#username").val(),password:$("#password").val()});
+    });
+};
+```
   The login.io.js file(client):
 ```js    
 LoginIO = function(){
