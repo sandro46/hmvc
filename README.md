@@ -205,6 +205,54 @@ In order to function properly hmvc require this structure in every module:
     };
   }
   ```
+  
+Example(Websockets)
+====
+  The hmvc module works great with the express.io module for sockets.
+  Because we have a abstractization on the client we can very easily move from ajax to websocket.
+  The files that will change are:
+      app.js
+      login.js(server)
+      login.io.js(client, server)
+      
+  app.js
+  ```js
+  Hmvc = require('hmvc');
+  **express = require('express.io');**
+  ejs = require('ejs');
+  **var app = express().http().io();**
+  
+  app.configure(function () {
+      app.engine('.html', require('ejs').__express);
+      app.set('view engine', 'html');
+  
+      app.use(express.static(__dirname + '/plugins/'));
+  
+      app.use(express.cookieParser('bleah'));
+      app.use(express.bodyParser());
+      app.use(express.session());
+  });
+  
+  hmvc = new Hmvc({app:app,renderer:ejs.render,sqlfile:"sqlStatements",langfile:'lang'});
+  
+  hmvc.setMysqlHost({
+      host : 'localhost',
+      user: 'root',
+      password: 'amber',
+      database: 'baza'
+  });
+  hmvc.loadModules(__dirname+"/modules");
+  var modules = hmvc.modules;
+  
+  app.get('/', function(req, res){
+      res.render('index', {
+          stylesheets: modules.stylesheets,
+          javascripts: modules.javascripts
+      });
+  });
+  
+  app.listen(7076);
+  ```
 license
 ====
 
