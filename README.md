@@ -170,34 +170,45 @@ In order to function properly hmvc require this structure in every module:
           }
       }
   };
-  ```      
-  And the view:
+  ```     
+    The view:
   ```html    
-  <html>
-  <head>
-      <link rel="stylesheet" href="login.css"/>
-      <script language="javascript" src="login.js"></script>
-      <script language="javascript" src="login.io.js"></script>
-      <script language="javascript" src="jquery/jquery.js"></script>
-      <script language="javascript">
-          $(document).ready(function(){
-              Login();
-          });
-      </script>
-  </head>
-  <body>
-      <div id="login" style="height: 160px">
-            <div id='login_error' style="display: none"></div>
-            <div align="center">Username</div>
-            <div width="140"><input type="text" id="username"></div>
-            <div align="center">Password</div>
-            <div width="140"><input type="password" id="password"></div>
-"></div>
-            <input type="button" id="lbutton" class="submit" value="Login">
-      </div>
-  </body>
-  </html>
+<div id="login" style="height: 160px">
+    <div id='login_error' style="display: none"></div>
+    <div align="center">Username</div>
+    <div width="140"><input type="text" id="username"></div>
+    <div align="center">Password</div>
+    <div width="140"><input type="password" id="password"></div>
+    <input type="button" id="lbutton" class="submit" value="Login">
+</div>
   ```      
+  
+  And the main page:
+```html    
+<html>
+<head>
+    <script language="javascript" src="jquery/jquery.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script language="javascript">
+        var socket = io.connect();
+        $(document).ready(function(){
+            Login();
+        });
+    </script>
+    <% stylesheets.forEach(function(stylesheet){ %>
+    <link rel="stylesheet" href="<%= stylesheet %>">
+    <% }) %>
+
+    <% javascripts.forEach(function(javascript){ %>
+    <script type="text/javascript" src="<%= javascript %>"></script>
+    <% }) %>
+</head>
+<body>
+    <div id='login_container'></div>
+</body>
+</html>
+```
+  
   Login module depends on users module( just to show how a repository pattern and module connection works ).Diagram looks like this:
         ![diagram 2](diagram2.png "diagram 2")
   
@@ -343,44 +354,6 @@ module.exports = function LoginController(modules,_this) {
   }
 };
 ```
-  
-  The view:
-  ```html    
-<div id="login" style="height: 160px">
-    <div id='login_error' style="display: none"></div>
-    <div align="center">Username</div>
-    <div width="140"><input type="text" id="username"></div>
-    <div align="center">Password</div>
-    <div width="140"><input type="password" id="password"></div>
-    <input type="button" id="lbutton" class="submit" value="Login">
-</div>
-  ```      
-  
-  And the main page:
-```html    
-<html>
-<head>
-    <script language="javascript" src="jquery/jquery.js"></script>
-    <script src="/socket.io/socket.io.js"></script>
-    <script language="javascript">
-        var socket = io.connect();
-        $(document).ready(function(){
-            Login();
-        });
-    </script>
-    <% stylesheets.forEach(function(stylesheet){ %>
-    <link rel="stylesheet" href="<%= stylesheet %>">
-    <% }) %>
-
-    <% javascripts.forEach(function(javascript){ %>
-    <script type="text/javascript" src="<%= javascript %>"></script>
-    <% }) %>
-</head>
-<body>
-    <div id='login_container'></div>
-</body>
-</html>
-```      
 license
 ====
 
