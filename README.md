@@ -85,6 +85,7 @@ In order to function properly hmvc require this structure in every module:
   The login.js file(client):
   ```js    
   function Login(){
+    LoginIO(); // we call the constructor because we will add thing later maybe.
     $("#lbutton").on('click',function(){
       LoginIO.authenticate({username:$("#username").val(),password:$("#password").val()});
     });
