@@ -13,25 +13,31 @@ The framework was tested in node.js 0.10 and the requested frameworks are:
 
 Usage
 ====
-    To call a controller from a module you can write:
-        module.{moduleName}.controller.{function}() // the main controller
-        module.{moduleName}.controllers.{class}.{function}() // specific controller
-    Example if you have a module named login and a controller in this module named LoginController you can call:
-        module.login.controller.loadPage();
-        module.login.controllers.LoginController.loadPage();
+To call a controller from a module you can write:
+    
+    module.{moduleName}.controller.{function}() // the main controller
+    module.{moduleName}.controllers.{class}.{function}() // specific controller
+Example if you have a module named login and a controller in this module named LoginController you can call:
+    
+    module.login.controller.loadPage();
+    module.login.controllers.LoginController.loadPage();
         
-    For a view you will have
-        module.login.view which is a object with the functions:
-          - path ( a function that get's the view absolute path )
-          - render ( renders a view with a renderer like ejs.render, must be specified in hmvc constructor params)
-          - getLang ( return a file with multilanguage support, must be specified in hmvc constructor params)
-    And if you have multiple views:
-        module.login.views.{viewName} // views are considered only files with .html extensions
+For a view you will have
+    
+    module.login.view which is a object with the functions:
+      - path ( a function that get's the view absolute path )
+      - render ( renders a view with a renderer like ejs.render, must be specified in hmvc constructor params)
+      - getLang ( return a file with multilanguage support, must be specified in hmvc constructor params)
+And if you have multiple views:
+    
+    module.login.views.{viewName} // views are considered only files with .html extensions
         
-    For a model you will need to intializate a object with the new keyword.
-        var loginModel = new module.login.model(); // for one
-        var loginModel = new module.login.models.{modelName}. // for multiple
-    P.S : the name is not the filename *.js but the class inside that have module.exports.
+For a model you will need to intializate a object with the new keyword.
+    
+    var loginModel = new module.login.model(); // for one
+    var loginModel = new module.login.models.{modelName}. // for multiple
+
+P.S : the name is not the filename *.js but the class inside that have module.exports.
       
 Example(AJAX)
 ====
@@ -104,34 +110,24 @@ In order to function properly hmvc require this structure in every module:
   In client to server connection I recomend use this kind of structure
         ![diagram](diagram.png "diagram")
   
-  The login.js file(client):
-  ```js    
-  function Login(){
-    LoginIO();
-  }
-  
-  Login().load = function(){
-    $("#lbutton").on('click',function(){
-      LoginIO.authenticate({username:$("#username").val(),password:$("#password").val()});
-    });
-  }
-  ```    
   The login.io.js file(client):
-  ```js    
-  LoginIO = function(){
-      $.get('/login',function(data){
-          Login.load();
-      });
-  };
-  LoginIO.authenticate = function(data){
-      $.post('/login',data,function(data){
-         alert(data);
-      });
-  };
-  ```    
-  The login.io.js file(server):
-  ```js    
-  module.exports = function LoginIoController(modules,_this){
+```js    
+LoginIO = function(){
+  $.get('/login',function(data){
+      $("#login_container").html(data);
+      Login.load();
+  });
+};
+
+LoginIO.authenticate = function(data){
+    $.post('/login',data,function(data){
+       alert(data);
+    });
+};
+```    
+The login.io.js file(server):
+```js    
+module.exports = function LoginIoController(modules,_this){
     _this.app.get('/login',function(req,res){
         req.session.lang = 'en';
         modules.login.controller.loadPage(req.session,res);
@@ -140,10 +136,13 @@ In order to function properly hmvc require this structure in every module:
     _this.app.post('/login',function(req,res){
         modules.login.controller.checkUserLogin(req.session,res,req.body.username,req.body.password);
     });
-  };
-  ```    
-  The login.js file(server):
-  ```js      
+};
+```    
+The login.js file(server):
+```js      
+var ejs = require('ejs'),
+    fs  = require('fs');
+
 module.exports = function LoginController(modules,_this) {
     this.loadPage = function(session,res){
         res.render('login',{session:session,lang:modules.login.view.getLang()});
@@ -170,7 +169,7 @@ module.exports = function LoginController(modules,_this) {
         }
     }
 };
-  ```     
+```     
 The view:
   ```html    
 <div id="login" style="height: 160px">
