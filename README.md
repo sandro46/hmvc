@@ -29,8 +29,8 @@ Usage
         module.login.views.{viewName} // views are considered only files with .html extensions
         
     For a model you will need to intializate a object with the new keyword.
-        var loginModel = module.login.model(); // for one
-        var loginModel = module.login.models.{modelName}. // for multiple
+        var loginModel = new module.login.model(); // for one
+        var loginModel = new module.login.models.{modelName}. // for multiple
     P.S : the name is not the filename *.js but the class inside that have module.exports.
       
 Example(AJAX)
