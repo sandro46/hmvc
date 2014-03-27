@@ -65,10 +65,10 @@ The primary file (app.js):
   hmvc = new Hmvc({app:app});
   
   hmvc.setMysqlHost({
-      host : 'localhost',
-      user: 'root',
-      password: 'amber',
-      database: 'baza'
+      host : 'yourhost',
+      user: 'youraccount',
+      password: 'yourpassword',
+      database: 'yourdatabase'
   });
   hmvc.loadModules(__dirname+"/modules");
   var modules = hmvc.modules;
@@ -252,10 +252,10 @@ Example(Websockets)
   hmvc = new Hmvc({app:app,renderer:ejs.render});
   
   hmvc.setMysqlHost({
-      host : 'localhost',
-      user: 'root',
-      password: 'amber',
-      database: 'baza'
+      host : 'yourhost',
+      user: 'youraccount',
+      password: 'yourpassword',
+      database: 'yourdatabase'
   });
   hmvc.loadModules(__dirname+"/modules");
   var modules = hmvc.modules;
