@@ -132,7 +132,7 @@ In order to function properly hmvc require this structure in every module:
   
       function checkUserLoginCallback(data,err,result){
           if (err)
-              _this.logger(err);
+              throw err;
           if (!result[0]){
               data.res.writeHead(200, {'Content-Type': 'text/plain'});
               data.res.write("nu ai fost logat");
@@ -255,16 +255,18 @@ Example(Websockets)
   ```
   login.io.js(client)
   ```js
-  LoginIO = function(){ };
+  LoginIO = function(){
+    socket.emit('login:create');
+  };
   LoginIO.authenticate = function(data){
-      socket.emit('login:create',data);
+      socket.emit('login:auth',data);
   };
   
   socket.on('login:created',function(data){
      $("#login").html(data); // div in home page
   }
   
-  socket.on('login:auth',function(data){
+  socket.on('login:authenticated',function(data){
     alert(data);
   }
   ```
@@ -288,7 +290,7 @@ Example(Websockets)
   ```js
   module.exports = function LoginController(modules,_this) {
       this.loadPage = function(session,socket){
-          res.render('login',{session:session,lang:modules.login.view.getLang()});
+          socket.emit('login:created',modules.login.view.render({session:session,lang:modules.login.view.getLang()});
       };
   
       this.checkUserLogin = function(session,socket,username,password){
@@ -297,13 +299,13 @@ Example(Websockets)
   
       function checkUserLoginCallback(data,err,result){
           if (err)
-              _this.logger(err);
+              throw err;
           if (!result[0]){
-              data.socket.emit("authenticated","nu ai fost logat");
+              data.socket.emit("login:authenticated","nu ai fost logat");
           }else{
               data.session.user = result[0];
               data.session.save();
-              data.socket.emit("authenticated","ai fost logat");
+              data.socket.emit("login:authenticated","ai fost logat");
           }
       }
   };
