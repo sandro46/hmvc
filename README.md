@@ -327,7 +327,7 @@ Example(Websockets)
   };
   ```
   
-  And the view:
+  The view:
   ```html    
       <div id="login" style="height: 160px">
             <div id='login_error' style="display: none"></div>
@@ -335,7 +335,6 @@ Example(Websockets)
             <div width="140"><input type="text" id="username"></div>
             <div align="center">Password</div>
             <div width="140"><input type="password" id="password"></div>
-"></div>
             <input type="button" id="lbutton" class="submit" value="Login">
       </div>
   ```      
