@@ -40,7 +40,7 @@ The primary file (app.js):
       app.use(express.session());
   });
   
-  hmvc = new Hmvc({app:app,renderer:ejs.render,sqlfile:"sqlStatements",langfile:'lang'});
+  hmvc = new Hmvc({app:app});
   
   hmvc.setMysqlHost({
       host : 'localhost',
@@ -50,13 +50,6 @@ The primary file (app.js):
   });
   hmvc.loadModules(__dirname+"/modules");
   var modules = hmvc.modules;
-  
-  app.get('/', function(req, res){
-      res.render('index', {
-          stylesheets: modules.stylesheets,
-          javascripts: modules.javascripts
-      });
-  });
   
   app.listen(7076);
 ```  
@@ -169,7 +162,7 @@ In order to function properly hmvc require this structure in every module:
             <div width="140"><input type="text" id="username"></div>
             <div align="center">Password</div>
             <div width="140"><input type="password" id="password"></div>
-            <div align="center" colspan="2"><%= lang.login_remember[session.lang] %><input type="checkbox" id="setcookie"></div>
+"></div>
             <input type="button" id="lbutton" class="submit" value="Login">
       </div>
   </body>
@@ -233,7 +226,7 @@ Example(Websockets)
       app.use(express.session());
   });
   
-  hmvc = new Hmvc({app:app,renderer:ejs.render,sqlfile:"sqlStatements",langfile:'lang'});
+  hmvc = new Hmvc({app:app,renderer:ejs.render});
   
   hmvc.setMysqlHost({
       host : 'localhost',
@@ -319,7 +312,7 @@ Example(Websockets)
             <div width="140"><input type="text" id="username"></div>
             <div align="center">Password</div>
             <div width="140"><input type="password" id="password"></div>
-            <div align="center" colspan="2"><%= lang.login_remember[session.lang] %><input type="checkbox" id="setcookie"></div>
+"></div>
             <input type="button" id="lbutton" class="submit" value="Login">
       </div>
   ```      
