@@ -15,11 +15,12 @@ Example(AJAX)
 ====
 
 In order to run the example you need to create a database in mysql with a table users.
-
-        CREATE TABLE `users` (
-          `username` varchar(25) NOT NULL,
-          `password` varchar(100) NOT NULL,
-        );
+```sql  
+  CREATE TABLE `users` (
+    `username` varchar(25) NOT NULL,
+    `password` varchar(100) NOT NULL,
+  );
+```
         
 The primary file (app.js):
 ```js
