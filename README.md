@@ -107,7 +107,7 @@ In order to function properly hmvc require this structure in every module:
   The login.js file(client):
   ```js    
   function Login(){
-    LoginIO(); // we call the constructor because we will add things later maybe.
+    LoginIO();
   }
   
   Login().load = function(){
@@ -118,7 +118,11 @@ In order to function properly hmvc require this structure in every module:
   ```    
   The login.io.js file(client):
   ```js    
-  LoginIO = function(){ };
+  LoginIO = function(){
+      $.get('/login',function(data){
+          Login.load();
+      });
+  };
   LoginIO.authenticate = function(data){
       $.post('/login',data,function(data){
          alert(data);
@@ -235,143 +239,148 @@ Example(Websockets)
       login.io.js(client, server)
       
   app.js
-  ```js
-  Hmvc = require('hmvc');
-  **express = require('express.io');**
-  ejs = require('ejs');
-  **var app = express().http().io();**
-  
-  app.configure(function () {
-      app.engine('.html', require('ejs').__express);
-      app.set('view engine', 'html');
-  
-      app.use(express.static(__dirname + '/plugins/'));
-  
-      app.use(express.cookieParser('bleah'));
-      app.use(express.bodyParser());
-      app.use(express.session());
-  });
-  
-  hmvc = new Hmvc({app:app,renderer:ejs.render});
-  
-  hmvc.setMysqlHost({
-      host : 'yourhost',
-      user: 'youraccount',
-      password: 'yourpassword',
-      database: 'yourdatabase'
-  });
-  hmvc.loadModules(__dirname+"/modules");
-  var modules = hmvc.modules;
-  
-  app.get('/', function(req, res){
-      res.render('index', {
-          stylesheets: modules.stylesheets,
-          javascripts: modules.javascripts
-      });
-  });
-  
-  app.listen(7076);
-  ```
-  login.js(client)
-  ```js
-  function Login(){
-  LoginIO();
-  }
-  
-  Login.load = function(){
-      $("#lbutton").on('click',function(){
-          LoginIO.authenticate({username:$("#username").val(),password:$("#password").val()});
-      });
-  };
+```js
+Hmvc = require('hmvc');
+express = require('express.io');
+ejs = require('ejs');
+connect = require('connect');
+var app = express().http().io();
 
-  ```
+
+var cookieParser = express.cookieParser('your secret sauce'),
+    sessionStore = new connect.middleware.session.MemoryStore();
+
+app.configure(function () {
+    app.engine('.html', require('ejs').__express);
+    app.set('view engine', 'html');
+
+    app.use(express.static(__dirname + '/plugins/'));
+
+    app.use(express.cookieParser('bleah'));
+    app.use(express.bodyParser());
+    app.use(express.session({
+        secret:'your secret sauce',
+        store: sessionStore,
+        expires : new Date(Date.now() + 3600000)
+    }));
+});
+
+hmvc = new Hmvc({app:app,renderer:ejs.render});
+
+hmvc.setMysqlHost({
+    host : 'localhost',
+    user: 'root',
+    password: 'amber',
+    database: 'baza'
+});
+hmvc.loadModules(__dirname+"/modules");
+var modules = hmvc.modules;
+
+app.get('/', function(req, res){
+    res.render('index', {
+        stylesheets: modules.stylesheets,
+        javascripts: modules.javascripts
+    });
+});
+
+app.listen(7076);
+```
   login.io.js(client)
-  ```js
-  LoginIO = function(){
+```js
+LoginIO = function(){
     socket.emit('login:create');
-  };
-  LoginIO.authenticate = function(data){
-      socket.emit('login:auth',data);
-  };
-  
-  socket.on('login:created',function(data){
-     $("#login_container").html(data); // div in home page
-     Login.load();
-  }
-  
-  socket.on('login:authenticated',function(data){
+};
+LoginIO.authenticate = function(data){
+    socket.emit('login:auth',data);
+};
+
+socket.on('login:created',function(data){
+    $("#login_container").html(data); // div in home page
+    Login.load();
+});
+
+socket.on('login:authenticated',function(data){
     alert(data);
-  }
-  ```
+});
+```
   
   login.io.js(server)
-  ```js
-  module.exports = function LoginIoController(modules,_this){
-    _this.app.io.route('login',
-    {
+```js
+module.exports = function LoginIoController(modules,_this){
+  _this.app.io.route('login',{
       create: function(req){
           req.session.lang = 'en';
           modules.login.controller.loadPage(req.session,req.io);
       },
       auth: function(req){
+          console.log(req.data);
           modules.login.controller.checkUserLogin(req.session,req.io,req.data.username,req.data.password);
       }
-    });
-  };
-  ```
+  });
+};
+```
   login.js(server)
-  ```js
-  module.exports = function LoginController(modules,_this) {
-      this.loadPage = function(session,socket){
-          socket.emit('login:created',modules.login.view.render({session:session,lang:modules.login.view.getLang()});
-      };
-  
-      this.checkUserLogin = function(session,socket,username,password){
-          modules.users.controller.getUser(checkUserLoginCallback,username,password,{session:session,socket:socket});
-      };
-  
-      function checkUserLoginCallback(data,err,result){
-          if (err)
-              throw err;
-          if (!result[0]){
-              data.socket.emit("login:authenticated","nu ai fost logat");
-          }else{
-              data.session.user = result[0];
-              data.session.save();
-              data.socket.emit("login:authenticated","ai fost logat");
-          }
-      }
+```js
+module.exports = function LoginController(modules,_this) {
+  this.loadPage = function(session,socket){
+      socket.emit('login:created',modules.login.view.render({session:session,lang:modules.login.view.getLang()}));
   };
-  ```
+
+  this.checkUserLogin = function(session,socket,username,password){
+      modules.users.controller.getUser(checkUserLoginCallback,username,password,{session:session,socket:socket});
+  };
+
+  function checkUserLoginCallback(data,err,result){
+      if (err)
+          throw err;
+      if (!result[0]){
+          data.socket.emit("login:authenticated","nu ai fost logat");
+      }else{
+          data.session.user = result[0];
+          data.session.save();
+          data.socket.emit("login:authenticated","ai fost logat");
+      }
+  }
+};
+```
   
   The view:
   ```html    
-      <div id="login" style="height: 160px">
-            <div id='login_error' style="display: none"></div>
-            <div align="center">Username</div>
-            <div width="140"><input type="text" id="username"></div>
-            <div align="center">Password</div>
-            <div width="140"><input type="password" id="password"></div>
-            <input type="button" id="lbutton" class="submit" value="Login">
-      </div>
+<div id="login" style="height: 160px">
+    <div id='login_error' style="display: none"></div>
+    <div align="center">Username</div>
+    <div width="140"><input type="text" id="username"></div>
+    <div align="center">Password</div>
+    <div width="140"><input type="password" id="password"></div>
+    <input type="button" id="lbutton" class="submit" value="Login">
+</div>
   ```      
   
   And the main page:
-  ```html    
-  <html>
-  <head>
-      <script language="javascript" src="jquery/jquery.js"></script>
-      <script language="javascript">
-          $(document).ready(function(){
-              Login();
-          });
-      </script>
-  </head>
-  <body>
-      <div id='login_container'></div>
-  </body>
-  </html>
-  ```      
+```html    
+<html>
+<head>
+    <script language="javascript" src="jquery/jquery.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script language="javascript">
+        var socket = io.connect();
+        $(document).ready(function(){
+            Login();
+        });
+    </script>
+    <% stylesheets.forEach(function(stylesheet){ %>
+    <link rel="stylesheet" href="<%= stylesheet %>">
+    <% }) %>
+
+    <% javascripts.forEach(function(javascript){ %>
+    <script type="text/javascript" src="<%= javascript %>"></script>
+    <% }) %>
+</head>
+<body>
+    <div id='login_container'></div>
+</body>
+</html>
+```      
 license
 ====
 
