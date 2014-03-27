@@ -108,6 +108,7 @@ module.exports = function TestController(){
     this.load = function(res){
         res.render('test'); // in this case you will need to ensure that are no name conflicts in multiple modules
         //res.render(modules.test.view.path());// in this case you don't
+        //res.render(modules.test.view.path(),{modules:modules}) // if you want the modules in the view, this is made automatically in render function of view object, but this works only with websockets see example for more info.
     }
 };
 ```
