@@ -106,7 +106,8 @@ test.js file
 ```js
 module.exports = function TestController(){
     this.load = function(res){
-        res.render('test')
+        res.render('test'); // in this case you will need to ensure that are no name conflicts in multiple modules
+        //res.render(modules.test.view.path());// in this case you don't
     }
 };
 ```
