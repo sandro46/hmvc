@@ -45,6 +45,7 @@ To call a controller from a module you can write:
     module.{moduleName}.controllers.{class}.{function}() // specific controller
 
 Example if you have a module named login and a controller in this module named LoginController you can call:
+
     module.login.controller.loadPage();
     module.login.controllers.LoginController.loadPage();
         
@@ -88,17 +89,18 @@ var modules = hmvc.modules;
 app.listen(7076);
 ```
 a module named test:
-    test
-    |
-    --mvc
+
+      test
       |
-      --controllers
+      --mvc
         |
-        --test.js
-        --test.io.js
-      --views
-        |
-        --test.html
+        --controllers
+          |
+          --test.js
+          --test.io.js
+        --views
+          |
+          --test.html
 
 test.js file
 ```js
