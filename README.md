@@ -297,7 +297,7 @@ Example(Websockets)
           modules.login.controller.loadPage(req.session,req.io);
       },
       auth: function(req){
-          modules.login.controller.checkUserLogin(req.session,req.io,req.body.username,req.body.password);
+          modules.login.controller.checkUserLogin(req.session,req.io,req.data.username,req.data.password);
       }
     });
   };
