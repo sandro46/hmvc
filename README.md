@@ -144,34 +144,34 @@ In order to function properly hmvc require this structure in every module:
   ```    
   The login.js file(server):
   ```js      
-  module.exports = function LoginController(modules,_this) {
-      this.loadPage = function(session,res){
-          res.render('login',{session:session,lang:modules.login.view.getLang()});
-      };
-  
-      this.checkUserLogin = function(session,res,username,password){
-          modules.users.controller.getUser(checkUserLoginCallback,username,password,{session:session,res:res});
-      };
-  
-      function checkUserLoginCallback(data,err,result){
-          if (err)
-              throw err;
-          if (!result[0]){
-              data.res.writeHead(200, {'Content-Type': 'text/plain'});
-              data.res.write("nu ai fost logat");
-              data.res.end();
-          }else{
-              data.session.user = result[0];
-              data.session.save();
-  
-              data.res.writeHead(200, {'Content-Type': 'text/plain'});
-              data.res.write("ai fost logat");
-              data.res.end();
-          }
-      }
-  };
+module.exports = function LoginController(modules,_this) {
+    this.loadPage = function(session,res){
+        res.render('login',{session:session,lang:modules.login.view.getLang()});
+    };
+
+    this.checkUserLogin = function(session,res,username,password){
+        modules.users.controller.getUser(checkUserLoginCallback,username,password,{session:session,res:res});
+    };
+
+    function checkUserLoginCallback(data,err,result){
+        if (err)
+            throw err;
+        if (!result[0]){
+            data.res.writeHead(200, {'Content-Type': 'text/plain'});
+            data.res.write("nu ai fost logat");
+            data.res.end();
+        }else{
+            data.session.user = result[0];
+            data.session.save();
+
+            data.res.writeHead(200, {'Content-Type': 'text/plain'});
+            data.res.write("ai fost logat");
+            data.res.end();
+        }
+    }
+};
   ```     
-    The view:
+The view:
   ```html    
 <div id="login" style="height: 160px">
     <div id='login_error' style="display: none"></div>
@@ -183,25 +183,25 @@ In order to function properly hmvc require this structure in every module:
 </div>
   ```      
   
-  And the main page:
+And the main page:
 ```html    
 <html>
 <head>
-    <script language="javascript" src="jquery/jquery.js"></script>
-    <script src="/socket.io/socket.io.js"></script>
-    <script language="javascript">
-        var socket = io.connect();
-        $(document).ready(function(){
-            Login();
-        });
-    </script>
-    <% stylesheets.forEach(function(stylesheet){ %>
-    <link rel="stylesheet" href="<%= stylesheet %>">
-    <% }) %>
+  <script language="javascript" src="jquery/jquery.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script language="javascript">
+      var socket = io.connect();
+      $(document).ready(function(){
+          Login();
+      });
+  </script>
+  <% stylesheets.forEach(function(stylesheet){ %>
+  <link rel="stylesheet" href="<%= stylesheet %>">
+  <% }) %>
 
-    <% javascripts.forEach(function(javascript){ %>
-    <script type="text/javascript" src="<%= javascript %>"></script>
-    <% }) %>
+  <% javascripts.forEach(function(javascript){ %>
+  <script type="text/javascript" src="<%= javascript %>"></script>
+  <% }) %>
 </head>
 <body>
     <div id='login_container'></div>
