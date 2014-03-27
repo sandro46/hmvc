@@ -269,6 +269,19 @@ Example(Websockets)
   
   app.listen(7076);
   ```
+  login.js(client)
+  ```js
+  function Login(){
+  LoginIO();
+  }
+  
+  Login.load = function(){
+      $("#lbutton").on('click',function(){
+          LoginIO.authenticate({username:$("#username").val(),password:$("#password").val()});
+      });
+  };
+
+  ```
   login.io.js(client)
   ```js
   LoginIO = function(){
