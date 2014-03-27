@@ -253,6 +253,61 @@ Example(Websockets)
   
   app.listen(7076);
   ```
+  login.io.js(client)
+  ```js
+  LoginIO = function(){ };
+  LoginIO.authenticate = function(data){
+      socket.emit('login:create',data);
+  };
+  
+  socket.on('login:created',function(data){
+     $("#login").html(data); // div in home page
+  }
+  
+  socket.on('login:auth',function(data){
+    alert(data);
+  }
+  ```
+  
+  login.io.js(server)
+  ```js
+  module.exports = function LoginIoController(modules,_this){
+    _this.app.io.route('login',
+    {
+      create: function(req){
+          req.session.lang = 'en';
+          modules.login.controller.loadPage(req.session,req.io);
+      },
+      auth: function(req){
+          modules.login.controller.checkUserLogin(req.session,req.io,req.body.username,req.body.password);
+      }
+    });
+  };
+  ```
+  login.js(server)
+  ```js
+  module.exports = function LoginController(modules,_this) {
+      this.loadPage = function(session,socket){
+          res.render('login',{session:session,lang:modules.login.view.getLang()});
+      };
+  
+      this.checkUserLogin = function(session,socket,username,password){
+          modules.users.controller.getUser(checkUserLoginCallback,username,password,{session:session,socket:socket});
+      };
+  
+      function checkUserLoginCallback(data,err,result){
+          if (err)
+              _this.logger(err);
+          if (!result[0]){
+              data.socket.emit("authenticated","nu ai fost logat");
+          }else{
+              data.session.user = result[0];
+              data.session.save();
+              data.socket.emit("authenticated","ai fost logat");
+          }
+      }
+  };
+  ```
 license
 ====
 
