@@ -21,7 +21,7 @@ Usage
         module.login.controllers.LoginController.loadPage();
         
     For a view you will have
-        module.login.view which is a object with the classes:
+        module.login.view which is a object with the functions:
           - path ( a function that get's the view absolute path )
           - render ( renders a view with a renderer like ejs.render, must be specified in hmvc constructor params)
           - getLang ( return a file with multilanguage support, must be specified in hmvc constructor params)
