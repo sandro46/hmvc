@@ -10,6 +10,11 @@ Dependencies
 The framework was tested in node.js 0.10 and the requested frameworks are:
   -express
   -ejs(I will put a jade example soon if i have time).
+  
+Instalation
+====
+
+    npm install hmvc
 
 Usage
 ====
