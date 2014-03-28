@@ -68,6 +68,25 @@ P.S : the name is not the filename *.js but the class inside that have module.ex
 
 Simple example
 ====
+Application structure
+    
+    Simple app
+    |
+    -- modules
+      test
+      |
+      --mvc
+        |
+        --controllers
+          |
+          --test.js
+          --test.io.js
+        --views
+          |
+          --test.html
+    -- node_modules
+    -- app.js
+
 the main file(app.js)
 ```js
 Hmvc = require('hmvc');
@@ -88,19 +107,6 @@ var modules = hmvc.modules;
 
 app.listen(7076);
 ```
-a module named test:
-
-      test
-      |
-      --mvc
-        |
-        --controllers
-          |
-          --test.js
-          --test.io.js
-        --views
-          |
-          --test.html
 
 test.js file
 ```js
