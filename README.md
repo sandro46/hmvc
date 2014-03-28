@@ -110,7 +110,7 @@ app.listen(7076);
 
 test.js file
 ```js
-module.exports = function TestController(){
+module.exports = function TestController(modules,_this){
     this.load = function(res){
         res.render('test'); // in this case you will need to ensure that are no name conflicts in multiple modules
         //res.render(modules.test.view.path());// in this case you don't
