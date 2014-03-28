@@ -2,6 +2,14 @@ Example(AJAX)
 ====
 
 In order to run the example you need to create a database in mysql with a table users.
+You will also need the folowing modules:
+  
+    -express
+    -ejs
+    -connect
+    -express.io( for websocket example )
+    -socket.io( for websocket example )
+  
 ```sql  
   CREATE TABLE `users` (
     `username` varchar(25) NOT NULL,
