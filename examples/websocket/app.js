@@ -23,13 +23,13 @@ app.configure(function () {
     }));
 });
 
-hmvc = new Hmvc({app:app,renderer:ejs.render});
+hmvc = new Hmvc({app:app,renderer:ejs.render,view_extension:'html'});
 
 hmvc.setMysqlHost({
-    host : 'localhost',
-    user: 'root',
-    password: 'amber',
-    database: 'baza'
+    host : 'yourhost',
+    user: 'youruser',
+    password: 'yourpassword',
+    database: 'yourdb'
 });
 hmvc.loadModules(__dirname+"/modules");
 var modules = hmvc.modules;
