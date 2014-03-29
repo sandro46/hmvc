@@ -35,7 +35,7 @@ The primary file (app.js):
       app.use(express.session());
   });
   
-  hmvc = new Hmvc({app:app});
+  hmvc = new Hmvc({app:app,view_extension:'html'});
   
   hmvc.setMysqlHost({
       host : 'yourhost',
