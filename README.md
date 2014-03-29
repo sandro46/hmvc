@@ -105,7 +105,7 @@ app.configure(function () {
     app.use(express.static(__dirname + '/plugins/'));
 });
 
-hmvc = new Hmvc({app:app});
+hmvc = new Hmvc({app:app,view_extension:'html'});
 
 hmvc.loadModules(__dirname+"/modules");
 var modules = hmvc.modules;
