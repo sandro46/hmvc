@@ -134,8 +134,42 @@ test.html file
 </body>
 </html>
 ```
-
 P.S in _this are send the parameters that you give to hmvc constructor except for langfile and sqlStatements which are reserved.
+
+Simple example(jade)
+====
+The differences between jade and ejs application are only in view and main file(app.js)
+app.js
+
+```js
+Hmvc = require('hmvc');
+express = require('express');
+ejs = require('jade');
+var app = express();
+
+app.configure(function () {
+    app.set('view engine', 'jade');
+    app.use(express.static(__dirname + '/plugins/'));
+});
+
+hmvc = new Hmvc({app:app,view_extension:'jade'});
+
+hmvc.loadModules(__dirname+"/modules");
+var modules = hmvc.modules;
+
+app.listen(7076);
+```
+
+test.jade
+
+```jade
+html
+    head
+    body
+        This is a test
+        =modules.test.view.path()
+```
+
 license
 ====
 
