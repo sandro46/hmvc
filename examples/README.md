@@ -254,7 +254,7 @@ app.configure(function () {
     }));
 });
 
-hmvc = new Hmvc({app:app,renderer:ejs.render});
+hmvc = new Hmvc({app:app,renderer:ejs.render,view_extension:'html'});
 
 hmvc.setMysqlHost({
     host : 'localhost',
