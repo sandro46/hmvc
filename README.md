@@ -4,12 +4,6 @@ hmvc
 A hierarchical mvc framework for node.js.
 I created this framework in order to create my bachelor degree project.
 
-Dependencies
-====
-
-The framework was tested in node.js 0.10 and the requested frameworks are:
-  -express
-  -ejs(I will put a jade example soon if i have time).
   
 Instalation
 ====
