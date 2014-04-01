@@ -285,6 +285,65 @@ index.html file
 </html>
 ```
 
+Simple example websockets - jade
+====
+In jade the differences appear only in app.js and views.
+
+app.js
+```js
+Hmvc = require('hmvc');
+express = require('express.io');
+jade = require('jade');
+var app = express().http().io();
+
+app.configure(function () {
+    app.set('view engine', 'jade');
+    app.use(express.static(__dirname + '/plugins/'));
+});
+
+hmvc = new Hmvc({app:app,renderer:jade.render,view_extension:'jade'});
+
+hmvc.loadModules(__dirname+"/modules");
+var modules = hmvc.modules;
+
+app.get('/',function(req,res){
+    res.render(modules.layout.views.imba.path(),{
+        javascripts:modules.javascripts
+    });
+});
+
+app.listen(7076);
+```
+
+index.jade
+```jade
+html
+    head
+        script(src='jquery/jquery.js')
+        script(src='/socket.io/socket.io.js')
+        script(type='text/javascript').
+            var socket = io.connect();
+        each javascript,i in javascripts
+                script(src=javascript)
+        script(type='text/javascript').
+            $(document).ready(function(){
+                Test();
+                Test.load();
+            });
+    body
+        #test_container
+
+```
+
+test.jade
+```jade
+html
+    head
+    body
+        div This is a test
+        = modules.test.view.path()
+```
+
 license
 ====
 
