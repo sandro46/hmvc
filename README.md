@@ -170,6 +170,115 @@ html
         =modules.test.view.path()
 ```
 
+Simple example(websocket) - ejs
+====
+the main file(app.js)
+```js
+  Hmvc = require('hmvc');
+express = require('express.io');
+ejs = require('ejs');
+var app = express().http().io();
+
+app.configure(function () {
+    app.engine('.html', require('ejs').__express);
+    app.set('view engine', 'html');
+    app.use(express.static(__dirname + '/plugins/'));
+});
+
+hmvc = new Hmvc({app:app,renderer:ejs.render,view_extension:'html'});
+
+hmvc.loadModules(__dirname+"/modules");
+var modules = hmvc.modules;
+
+app.get('/',function(req,res){
+   res.render(modules.layout.view.path(),{
+       javascripts:modules.javascripts
+   });
+});
+
+app.listen(7076);
+```
+
+test.io.js(server)
+```js
+module.exports = function TestIOController(modules,_this){
+    _this.app.io.route('test:create',function(req){
+        modules.test.controller.load(req.io);
+    });
+};
+```
+
+test.js(server)
+```js
+module.exports = function TestController(modules){
+    this.load = function(socket){
+        socket.emit("test:created",modules.test.view.render({}));
+    }
+};
+```
+
+test.io.js(client)
+```js
+function TestIO(){
+
+}
+
+TestIO.create= function(){
+    socket.emit('test:create');
+};
+
+socket.on('test:created',function(data){
+   $("#test_container").html(data);
+});
+```
+
+test.js(client)
+```js
+function Test(){
+    TestIO();
+}
+
+Test.load = function(){
+    TestIO.create();
+};
+```
+
+index.html file
+```html
+<html>
+<head>
+    <script language="javascript" src="jquery/jquery.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script language="javascript">
+        var socket = io.connect();
+    </script>
+    <% javascripts.forEach(function(javascript){ %>
+    <script type="text/javascript" src="<%= javascript %>"></script>
+    <% }) %>
+    <script>
+        $(document).ready(function(){
+            Test();
+            Test.load();
+        });
+    </script>
+</head>
+<body>
+<div id='test_container'></div>
+</body>
+</html>
+```
+
+test.html file
+```html
+<html>
+<head></head>
+<body>
+This is a test ejs <%= modules.test.view.path() %>
+</body>
+</html>
+```
+
+
 license
 ====
 
