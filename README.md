@@ -6,13 +6,11 @@ I created this framework in order to create my bachelor degree project.
 
 * [Ajax Ejs](https://github.com/alexand7u/hmvc/tree/master/README.md#Ajax Ejs)
   
-Instalation
-====
+##Instalation
 
     npm install hmvc
 
-Usage
-====
+##Usage
 In order to function properly hmvc require this structure in every module:
        
         {module name}
@@ -66,8 +64,7 @@ For a model you will need to intializate a object with the new keyword.
 
 P.S : the name is not the filename *.js but the class inside that have module.exports.
 
-##Ajax Ejs
-Simple example
+##Simple example
 ====
 Application structure
     
@@ -145,8 +142,7 @@ test.html file
 ```
 P.S in _this are send the parameters that you give to hmvc constructor except for langfile and sqlStatements which are reserved.
 
-Simple example(jade)
-====
+##Simple example(jade)
 The differences between jade and ejs application are only in view and main file(app.js)
 app.js
 
@@ -179,8 +175,7 @@ html
         =modules.test.view.path()
 ```
 
-Simple example(websocket) - ejs
-====
+##EjsWebsocket
 the main file(app.js)
 ```js
   Hmvc = require('hmvc');
@@ -287,8 +282,7 @@ index.html file
 </html>
 ```
 
-Simple example websockets - jade
-====
+##JadeWebsocket
 In jade the differences appear only in app.js and views.
 
 app.js
