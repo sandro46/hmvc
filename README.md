@@ -11,7 +11,7 @@ I created this framework in order to create my bachelor degree project.
 
 Simple login application:
 * [Ajax Ejs Login Application](https://github.com/alexand7u/hmvc/tree/master/examples/README.md#ajaxejs)
-* [Websocket Ejs Login Application](https://github.com/alexand7u/hmvc/tree/master/examples/README.md#websocketejs)
+* [Websocket Ejs Login Application](https://github.com/alexand7u/hmvc/tree/master/examples/README.md#websocketsejs)
 
   
 ##Instalation
