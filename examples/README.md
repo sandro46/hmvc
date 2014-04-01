@@ -1,6 +1,4 @@
-Example(AJAX)
-====
-
+##AjaxEjs
 In order to run the example you need to create a database in mysql with a table users.
 You will also need the folowing modules:
   
@@ -218,8 +216,7 @@ And the main page:
   }
   ```
   
-Example(Websockets)
-====
+##WebsocketsEjs
   The hmvc module works great with the express.io module for sockets.
   Because we have a abstractization on the client we can very easily move from ajax to websocket.
   The files that will change are:
