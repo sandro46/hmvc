@@ -8,6 +8,11 @@ I created this framework in order to create my bachelor degree project.
 * [Ajax Jade](https://github.com/alexand7u/hmvc/tree/master/README.md#jade)
 * [Websocket Ejs](https://github.com/alexand7u/hmvc/tree/master/README.md#ejswebsocket)
 * [Websocket Jade](https://github.com/alexand7u/hmvc/tree/master/README.md#jadewebsocket)
+
+Simple login application:
+* [Ajax Ejs Login Application](https://github.com/alexand7u/hmvc/tree/master/examples/README.md#ajaxejs)
+* [Websocket Ejs Login Application](https://github.com/alexand7u/hmvc/tree/master/examples/README.md#websocketejs)
+
   
 ##Instalation
 
