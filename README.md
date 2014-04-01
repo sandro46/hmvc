@@ -83,6 +83,13 @@ Application structure
         --views
           |
           --test.html
+      layout
+      |
+      --mvc
+        |
+        --views
+          |
+          index.html
     -- node_modules
     -- app.js
 
