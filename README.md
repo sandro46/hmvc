@@ -4,7 +4,10 @@ hmvc
 A hierarchical mvc framework for node.js.
 I created this framework in order to create my bachelor degree project.
 
-* [Ajax Ejs](https://github.com/alexand7u/hmvc/tree/master/README.md#Ajax Ejs)
+* [Ajax Ejs](https://github.com/alexand7u/hmvc/tree/master/README.md#ejs)
+* [Ajax Jade](https://github.com/alexand7u/hmvc/tree/master/README.md#jade)
+* [Websocket Ejs](https://github.com/alexand7u/hmvc/tree/master/README.md#ejswebsocket)
+* [Websocket Jade](https://github.com/alexand7u/hmvc/tree/master/README.md#jadewebsocket)
   
 ##Instalation
 
