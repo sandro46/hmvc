@@ -4,6 +4,7 @@ hmvc
 A hierarchical mvc framework for node.js.
 I created this framework in order to create my bachelor degree project.
 
+* [Ajax Ejs](https://github.com/alexand7u/hmvc/tree/master/README.md#Ajax Ejs)
   
 Instalation
 ====
@@ -65,6 +66,7 @@ For a model you will need to intializate a object with the new keyword.
 
 P.S : the name is not the filename *.js but the class inside that have module.exports.
 
+##Ajax Ejs
 Simple example
 ====
 Application structure
