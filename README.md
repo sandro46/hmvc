@@ -64,7 +64,7 @@ For a model you will need to intializate a object with the new keyword.
 
 P.S : the name is not the filename *.js but the class inside that have module.exports.
 
-##Simple example
+##Ejs
 ====
 Application structure
     
@@ -142,7 +142,7 @@ test.html file
 ```
 P.S in _this are send the parameters that you give to hmvc constructor except for langfile and sqlStatements which are reserved.
 
-##Simple example(jade)
+##Jade
 The differences between jade and ejs application are only in view and main file(app.js)
 app.js
 
