@@ -68,7 +68,6 @@ For a model you will need to intializate a object with the new keyword.
 P.S : the name is not the filename *.js but the class inside that have module.exports.
 
 ##Ejs
-====
 Application structure
     
     Simple app
