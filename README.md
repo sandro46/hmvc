@@ -243,6 +243,16 @@ Test.load = function(){
 };
 ```
 
+test.html file
+```html
+<html>
+<head></head>
+<body>
+This is a test ejs <%= modules.test.view.path() %>
+</body>
+</html>
+```
+
 index.html file
 ```html
 <html>
@@ -267,17 +277,6 @@ index.html file
 </body>
 </html>
 ```
-
-test.html file
-```html
-<html>
-<head></head>
-<body>
-This is a test ejs <%= modules.test.view.path() %>
-</body>
-</html>
-```
-
 
 license
 ====
