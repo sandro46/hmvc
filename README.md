@@ -19,7 +19,7 @@ Simple login application:
     npm install hmvc
 
 ##Usage
-In order to function properly hmvc require this structure in every module:
+In order to function properly hmvc require this structure in every module(example login module):
        
         {module name}
         |
@@ -30,20 +30,22 @@ In order to function properly hmvc require this structure in every module:
         --javascript
           |
           -- login.js
-          -- login.io.js
+          -- login.io.js // handles server requests
         |
         --mvc
            |
            --controllers
               |
-              -- login.js
-              -- login.io.js
+              -- login.js  // should only be a class like modules.export = function LoginController() {...}
+              -- login.io.js // handles client requests
            |
            --models
            |
            --views
               |
               -- login.html
+              
+#####P.S: you don't have to make a .io.js file if you don't want but i recommend separating the request from client to server and viceversa, from the client code and server code. The .io.js file are just a abstract level over the request so you can easily change the request names. An other method will be to put a labels file somewhere in client and server. You shouldn't have horcoded request in client or server because it becomes harder to debug when the application starts to scale and very rigid to changes. Another workaround will be to use nested functions like socket.emit('',function(){}); //This P.S. is not part of the framework is only a indication.
               
 To call a controller from a module you can write:
     
