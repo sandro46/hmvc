@@ -187,7 +187,7 @@ html
 ##EjsWebsocket
 the main file(app.js)
 ```js
-  Hmvc = require('hmvc');
+Hmvc = require('hmvc');
 express = require('express.io');
 ejs = require('ejs');
 var app = express().http().io();
@@ -232,28 +232,24 @@ module.exports = function TestController(modules){
 
 test.io.js(client)
 ```js
-function TestIO(){
+function TestIO(socket){
+  socket.on('test:created',function(data){
+     $("#test_container").html(data);
+  });
 
+  this.create = function(){
+      socket.emit('test:create');
+  };
 }
-
-TestIO.create= function(){
-    socket.emit('test:create');
-};
-
-socket.on('test:created',function(data){
-   $("#test_container").html(data);
-});
 ```
 
 test.js(client)
 ```js
 function Test(){
-    TestIO();
+    window.testIO = new TestIO(socket);
+    testIO.create();
 }
-
-Test.load = function(){
-    TestIO.create();
-};
+var test = new Test();
 ```
 
 test.html file
@@ -280,8 +276,7 @@ index.html file
     <% }) %>
     <script>
         $(document).ready(function(){
-            Test();
-            Test.load();
+            window.test = new test(); // the object should be singleton
         });
     </script>
 </head>
