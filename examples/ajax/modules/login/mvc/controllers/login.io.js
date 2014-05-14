@@ -1,6 +1,5 @@
 module.exports = function LoginIoController(modules,_this){
     _this.app.get('/login',function(req,res){
-        req.session.lang = 'en';
         modules.login.controller.loadPage(req.session,res);
     });
 
