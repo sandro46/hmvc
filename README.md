@@ -3,7 +3,7 @@ hmvc
 
 A hierarchical mvc framework for node.js.
 I created this framework in order to create my bachelor degree project.
-
+* [New in 0.1e](https://github.com/alexand7u/hmvc/tree/master/README.md#0.1e)
 * [Ajax Ejs](https://github.com/alexand7u/hmvc/tree/master/README.md#ejs)
 * [Ajax Jade](https://github.com/alexand7u/hmvc/tree/master/README.md#jade)
 * [Websocket Ejs](https://github.com/alexand7u/hmvc/tree/master/README.md#ejswebsocket)
@@ -343,6 +343,27 @@ html
         div This is a test
         = modules.test.view.path()
 ```
+
+##0.1e
+  In the new version the main changes are:
+  - you can call files from current module with _this:
+      ```js
+        module.exports = function(modules,_this) // _this contains the controllers, models and views from current module
+        this.load = function(){ 
+          _this.controller.f(); // same as .view .views, etc.
+          modules.{moduleName}.controller.f(); // equivalent but if you change the module folder name the module will not work anymore :(. A module should not be influenced by external changes
+        }
+
+        this.f = f(){
+          console.log("test");
+        }
+      ```
+  - the .io.js files was separated from controllers even if they are in the same folder(you can call server .io.js file with _this.io....)
+  - If you want to use io you must specify the io parameter to hmvc :
+    ```js
+      var hmvc = new Hmvc({...,io:true,...}); // if you dont the framework will ignore .io.js files
+    ```
+  - module tests with expresso(nodeunit dont work assinc :() // experimental
 
 license
 ====
